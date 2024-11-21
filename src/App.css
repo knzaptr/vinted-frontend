@@ -1,42 +1,110 @@
-#root {
-  max-width: 1280px;
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+header {
+  padding: 15px 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      height: 50px;
+    }
+    input {
+      border: none;
+      width: 40%;
+      background-color: #f3f5f5;
+      height: 35px;
+      padding-left: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+    .connexion {
+      display: flex;
+      gap: 25px;
+
+      button {
+        color: #007783;
+        border: #007783 solid 1px;
+      }
+    }
+
+    .sell-your-articles {
+      background-color: #007783;
+      color: white;
+    }
   }
-  to {
-    transform: rotate(360deg);
+}
+
+.offers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+
+  .offer {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .picture {
+      height: 350px;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .owner {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      height: 30px;
+
+      .owner-pic {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+
+        img {
+          border-radius: 50%;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.offer-container {
+  background-color: #f3f5f5;
+  padding: 30px 0;
+  display: flex;
+  justify-content: space-around;
+
+  .offer-picture,
+  .offer-infos {
+    width: 450px;
+    height: 650px;
+    overflow: hidden;
   }
-}
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  .offer-infos {
+    padding: 30px;
+    background-color: white;
+  }
 }
