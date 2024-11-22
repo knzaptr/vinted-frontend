@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
+import Cookies from "js-cookie";
+
+const Login = ({ setToken }) => {
   const [userInfo, setUserInfo] = useState({
     password: "",
     email: "",
@@ -18,7 +20,12 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(`${import.meta.env.VITE_DATA}/user/login`, userInfo);
+      const response = await axios.post(
+        `${import.meta.env.VITE_DATA}/user/login`,
+        userInfo
+      );
+      Cookies.set("token", response.data.token, { expires: 14 });
+      setToken(Cookies.get("token"));
       navigate("/");
     } catch (error) {
       console.log(error.response);

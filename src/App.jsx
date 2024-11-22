@@ -6,18 +6,25 @@ import Header from "./components/header/Header";
 import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Cookies from "js-cookie";
 
 function App() {
   const [search, setSearch] = useState("");
+  const [token, setToken] = useState(Cookies.get("token") || null);
 
   return (
     <Router>
-      <Header search={search} setSearch={setSearch} />
+      <Header
+        search={search}
+        setSearch={setSearch}
+        token={token}
+        setToken={setToken}
+      />
       <Routes>
         <Route path="/" element={<Home search={search} />} />
         <Route path="/offer/:id" element={<Offer />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup setToken={setToken} />} />
+        <Route path="/login" element={<Login setToken={setToken} />} />
       </Routes>
     </Router>
   );

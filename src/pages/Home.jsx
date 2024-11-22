@@ -29,8 +29,9 @@ const Home = ({ search }) => {
     <main>
       <div className="offers container">
         {offers.map((offer) => {
+          const searchReg = new RegExp(search, "i");
           return (
-            offer.product_name.toLowerCase().includes(search.toLowerCase()) && (
+            searchReg.test(offer.product_name) && (
               <Offers
                 key={offer._id}
                 id={offer._id}

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
-const Signup = () => {
+const Signup = ({ setToken }) => {
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
@@ -31,8 +32,8 @@ const Signup = () => {
         `${import.meta.env.VITE_DATA}/user/signup`,
         userInfo
       );
-      console.log(response.data.message);
-
+      Cookies.set("token", response.data.token, { expires: 14 });
+      setToken(Cookies.get("token"));
       navigate("/");
     } catch (error) {
       console.log(error.response);
