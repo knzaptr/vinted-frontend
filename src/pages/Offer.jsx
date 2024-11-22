@@ -11,7 +11,9 @@ const Offer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_DATA}/${id}`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_DATA}/v2/offers/${id}`
+        );
 
         setData(response.data);
         setIsLoading(false);

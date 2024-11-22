@@ -9,7 +9,9 @@ const Home = ({ search }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_DATA);
+        const response = await axios.get(
+          `${import.meta.env.VITE_DATA}/v2/offers`
+        );
 
         setOffers(response.data.offers);
         setIsLoading(false);

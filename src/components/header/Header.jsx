@@ -19,7 +19,9 @@ const Header = ({ search, setSearch }) => {
           <Link to="/signup">
             <button>S'incrire</button>
           </Link>
-          <button>Se connecter</button>
+          <Link to="/login">
+            <button>Se connecter</button>
+          </Link>
         </div>
         <button className="sell-your-articles">Vends tes articles</button>
       </div>
