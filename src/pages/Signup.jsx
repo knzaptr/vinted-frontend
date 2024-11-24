@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Signup = ({ setToken }) => {
@@ -89,7 +89,9 @@ const Signup = ({ setToken }) => {
           <button type="submit">S'inscrire</button>
         </form>
 
-        <p>Tu as déjà un compte ? Connect-toi !</p>
+        <Link to="/login">
+          <p>Tu as déjà un compte ? Connect-toi !</p>
+        </Link>
       </div>
     </main>
   );

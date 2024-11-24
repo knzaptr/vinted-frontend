@@ -7,6 +7,7 @@ import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Cookies from "js-cookie";
+import Publish from "./pages/Publish";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -25,6 +26,7 @@ function App() {
         <Route path="/offer/:id" element={<Offer />} />
         <Route path="/signup" element={<Signup setToken={setToken} />} />
         <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/publish" element={<Publish />} />
       </Routes>
     </Router>
   );

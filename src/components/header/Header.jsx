@@ -6,7 +6,9 @@ const Header = ({ search, setSearch, token, setToken }) => {
   return (
     <header>
       <div className="container">
-        <img src={VintedLogo} alt="vinted" />
+        <Link to="/">
+          <img src={VintedLogo} alt="vinted" />
+        </Link>
         <input
           type="text"
           name="query"
@@ -20,7 +22,7 @@ const Header = ({ search, setSearch, token, setToken }) => {
           <>
             <button
               onClick={() => {
-                Cookies.remove(token);
+                Cookies.remove("token");
                 setToken(null);
               }}
             >
@@ -41,7 +43,6 @@ const Header = ({ search, setSearch, token, setToken }) => {
               </Link>
             </div>
             <Link to="/login">
-              {" "}
               <button className="sell-your-articles">Vends tes articles</button>
             </Link>
           </>
