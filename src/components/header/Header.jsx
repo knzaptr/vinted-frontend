@@ -21,6 +21,7 @@ const Header = ({ search, setSearch, token, setToken }) => {
         {token ? (
           <>
             <button
+              className="logoff"
               onClick={() => {
                 Cookies.remove("token");
                 setToken(null);
@@ -28,9 +29,6 @@ const Header = ({ search, setSearch, token, setToken }) => {
             >
               Se déconnecter
             </button>
-            <Link to="/publish">
-              <button className="sell-your-articles">Vends tes articles</button>
-            </Link>
           </>
         ) : (
           <>
@@ -42,11 +40,11 @@ const Header = ({ search, setSearch, token, setToken }) => {
                 <button>Se connecter</button>
               </Link>
             </div>
-            <Link to="/login">
-              <button className="sell-your-articles">Vends tes articles</button>
-            </Link>
           </>
         )}
+        <Link to="/publish">
+          <button className="sell-your-articles">Vends tes articles</button>
+        </Link>
       </div>
     </header>
   );

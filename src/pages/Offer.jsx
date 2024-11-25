@@ -41,7 +41,7 @@ const Offer = () => {
                 for (const [key, value] of Object.entries(detail)) {
                   return (
                     <div className="detail">
-                      <span>{key}</span> {value}
+                      <span>{key} </span> {value}
                     </div>
                   );
                 }

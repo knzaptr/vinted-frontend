@@ -1,5 +1,5 @@
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -7,6 +7,10 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 
 header {
@@ -31,6 +35,10 @@ header {
       padding: 10px 20px;
       border-radius: 5px;
     }
+
+    button:hover {
+      opacity: 80%;
+    }
     .connexion {
       display: flex;
       gap: 25px;
@@ -45,6 +53,32 @@ header {
       background-color: #007783;
       color: white;
     }
+
+    .logoff {
+      background-color: #ab1650;
+      color: white;
+    }
+  }
+}
+
+.hero {
+  height: 450px;
+  width: 100vw;
+  margin: 20px auto;
+  position: relative;
+
+  .bg-hero {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tear-hero {
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    bottom: -1px;
+    /* height: 100px; */
   }
 }
 
@@ -52,9 +86,10 @@ header {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  width: 100%;
 
   .offer {
-    width: 250px;
+    width: calc(1160px / 5);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -106,6 +141,18 @@ header {
   .offer-infos {
     padding: 30px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-around;
+
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      span {
+        color: lightgray;
+      }
+    }
   }
 }
 
@@ -157,6 +204,70 @@ header {
 
     p {
       color: lightgray;
+    }
+  }
+}
+
+.publish {
+  background-color: #f3f5f5;
+
+  h1 {
+    font-size: 30px;
+    margin: 20px auto;
+  }
+  .add-new-article {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    div {
+      min-height: 150px;
+      border: #cbcdcd solid 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background-color: white;
+    }
+
+    label {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+    }
+
+    label:not(:last-child) {
+      border-bottom: #cbcdcd solid 1px;
+    }
+
+    input,
+    textarea {
+      border: none;
+      border-bottom: #cbcdcd solid 1px;
+      height: 20px;
+      width: 50%;
+      outline: none;
+      align-items: flex-start;
+      padding: 5px;
+    }
+
+    #description {
+      min-height: 100px;
+    }
+
+    .picture {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      label {
+        display: flex;
+        gap: 10px;
+        border: #007783 solid 1px;
+        color: #007783;
+        font-size: 20px;
+        padding: 10px 20px;
+      }
     }
   }
 }
