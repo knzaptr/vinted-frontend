@@ -28,7 +28,7 @@ const Offer = () => {
   return isLoading ? (
     <span>En cours de chargement... </span>
   ) : (
-    <main>
+    <main className="offer-page">
       <div className="container">
         <div className="offer-container">
           <div className="offer-picture">
@@ -40,15 +40,17 @@ const Offer = () => {
               {data.product_details.map((detail) => {
                 for (const [key, value] of Object.entries(detail)) {
                   return (
-                    <div className="detail">
-                      <span>{key} </span> {value}
-                    </div>
+                    value !== "undefined" && (
+                      <div key={key} className="detail">
+                        <span className="left">{key}</span>{" "}
+                        <span className="right">{value}</span>
+                      </div>
+                    )
                   );
                 }
               })}
-              <div></div>
             </div>
-            <hr />
+            <div className="divider"></div>
             <div className="offer-name">{data.product_name}</div>
             <div className="offer-description">{data.product_description}</div>
             <div className="offer-owner">
@@ -59,8 +61,8 @@ const Offer = () => {
               )}
 
               <span>{data.owner.account.username}</span>
-              <button>Acheter</button>
             </div>
+            <button className="buy">Acheter</button>
           </div>
         </div>
       </div>

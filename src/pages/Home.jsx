@@ -1,17 +1,41 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Offers from "../components/content/Offers";
 import axios from "axios";
 import Hero from "../assets/img/hero.jpg";
 import Tear from "../assets/img/tear.svg";
+import SwitchExample from "../components/SwitchExample";
+import PriceRange from "../components/PriceRange";
 
 const Home = ({ search }) => {
   const [offers, setOffers] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [priceMax, setPriceMax] = useState();
-  const [priceMin, setPriceMin] = useState(0);
+  const [priceRange, setPriceRange] = useState([0, 500]);
   const [sort, setSort] = useState(false);
   const [limit, setLimit] = useState(100);
   const [nbTotalOffers, setNbTotalOffers] = useState();
+  const [page, setPage] = useState(1);
+
+  const navigate = useNavigate();
+
+  let pageButton = [];
+
+  const pageNo = () => {
+    for (let i = 1; i <= Math.ceil(nbTotalOffers / limit); i++) {
+      pageButton.push(
+        <button
+          key={i}
+          onClick={() => {
+            setPage(i);
+          }}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return pageButton;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,9 +45,10 @@ const Home = ({ search }) => {
           {
             params: {
               title: search,
-              priceMax: priceMax,
-              priceMin: priceMin,
+              priceMax: priceRange[1],
+              priceMin: priceRange[0],
               sort: sort ? "price-desc" : "price-asc",
+              page: page,
               limit: limit,
             },
           }
@@ -37,13 +62,23 @@ const Home = ({ search }) => {
     };
 
     fetchData();
-  }, [search, priceMax, priceMin, sort, limit]);
+  }, [search, priceRange, sort, limit, page, nbTotalOffers]);
 
   return isLoading ? (
     <span>En cours de chargement... </span>
   ) : (
     <main>
       <div className="hero">
+        <div className="sell-container">
+          <span>Prêts à faire du tri dans vos placards ?</span>
+          <button
+            onClick={() => {
+              navigate("./publish");
+            }}
+          >
+            Commencer à vendre
+          </button>
+        </div>
         <img className="bg-hero" src={Hero} alt="" />{" "}
         <div>
           <img className="tear-hero" src={Tear} alt="" />
@@ -51,48 +86,51 @@ const Home = ({ search }) => {
       </div>
       <div className="container">
         <div className="filter">
-          <label>
-            <input
-              type="checkbox"
-              onChange={(event) => {
-                setSort(event.target.checked);
-              }}
-              value={sort}
-            />
-            <span>Tri</span>
-          </label>
-          <input
-            type="number"
-            name="prixMin"
-            min="1"
-            max="10000"
-            onChange={(event) => {
-              setPriceMin(event.target.value);
+          <SwitchExample
+            name={sort ? "Prix décroissant" : "Prix croissant"}
+            checked={sort}
+            onChange={(checked) => {
+              setSort(checked);
             }}
-            value={priceMin}
-          />
-          <input
-            type="number"
-            name="prixMax"
-            min="1"
-            max="10000"
-            onChange={(event) => {
-              setPriceMax(event.target.value);
-            }}
-            value={priceMax}
           />
 
-          <select
-            id="limit"
-            name="limit"
-            value={limit}
-            onChange={(event) => setLimit(event.target.value)}
-          >
-            <option value={nbTotalOffers}>-</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
+          <PriceRange priceRange={priceRange} setPriceRange={setPriceRange} />
+
+          <div className="showNbOffer">
+            <span>Afficher </span>
+            <button
+              onClick={() => {
+                setLimit(nbTotalOffers);
+                setPage(1);
+              }}
+            >
+              all
+            </button>
+            <button
+              onClick={() => {
+                setLimit(10);
+                setPage(1);
+              }}
+            >
+              10
+            </button>
+            <button
+              onClick={() => {
+                setLimit(20);
+                setPage(1);
+              }}
+            >
+              20
+            </button>
+            <button
+              onClick={() => {
+                setLimit(30);
+                setPage(1);
+              }}
+            >
+              30
+            </button>
+          </div>
         </div>
         <div className="offers">
           {offers.map((offer) => {
@@ -112,6 +150,7 @@ const Home = ({ search }) => {
             );
           })}
         </div>
+        <div className="page-number">{pageNo()}</div>
       </div>
     </main>
   );

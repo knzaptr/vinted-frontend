@@ -1,28 +1,32 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { TiPlus } from "react-icons/ti";
 import axios from "axios";
 
 const Publish = ({ token }) => {
+  const navigate = useNavigate();
+
   const [articleInfo, setArticleInfo] = useState({
     title: undefined,
     picture: undefined,
     description: undefined,
     brand: undefined,
     size: undefined,
-    colour: undefined,
+    color: undefined,
     condition: undefined,
     city: undefined,
-    price: 1,
+    price: null,
     exchange: false,
   });
+
+  const [preview, setPreview] = useState([]);
 
   // const [picture, setPicture] = useState(null);
   // const [title, setTitle] = useState(null);
   // const [description, setDescription] = useState(null);
   // const [brand, setBrand] = useState(null);
   // const [size, setSize] = useState(null);
-  // const [colour, setColour] = useState(null);
+  // const [color, setColor] = useState(null);
   // const [condition, setCondition] = useState(null);
   // const [city, setCity] = useState(null);
   // const [price, setPrice] = useState(0);
@@ -45,23 +49,29 @@ const Publish = ({ token }) => {
       formData.append("description", description);
       formData.append("brand", brand);
       formData.append("size", size);
-      formData.append("colour", colour);
+      formData.append("color", color);
       formData.append("condition", condition);
       formData.append("city", city);
       formData.append("price", price);
       formData.append("exchange", exchange); */
       }
 
-      await axios.post(`${import.meta.env.VITE_DATA}/offer/publish`, formData, {
-        headers: {
-          authorization: "Bearer " + token,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_DATA}/offer/publish`,
+        formData,
+        {
+          headers: {
+            authorization: "Bearer " + token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       // Display the key/value pairs
       // for (let pair of formData.entries()) {
       //   console.log(pair[0] + ":" + pair[1]);
       // }
+
+      navigate(`/offer/${response.data._id}`);
     } catch (error) {
       console.log(error.response);
     }
@@ -77,6 +87,11 @@ const Publish = ({ token }) => {
     const newObj = { ...articleInfo };
     newObj.picture = event.target.files[0];
     setArticleInfo(newObj);
+    const newTab = [...preview];
+    newTab.push(URL.createObjectURL(newObj.picture));
+    setPreview(newTab);
+    console.log(newObj.picture);
+    console.log(event.target.files);
   };
 
   const handleExchangeChange = (event) => {
@@ -92,7 +107,19 @@ const Publish = ({ token }) => {
       <div className="container">
         <h1>Vends ton article</h1>
         <form className="add-new-article" onSubmit={handleSubmit}>
-          <div className="picture">
+          <div className="picture formulaire">
+            {preview.length > 0 && (
+              <div className="preview-container">
+                {preview.map((item, index) => {
+                  return (
+                    <div key={index} className="preview">
+                      <img src={item} />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             <label htmlFor="picture">
               <TiPlus /> <span>Ajoute une photo</span>
               <input
@@ -105,7 +132,7 @@ const Publish = ({ token }) => {
             </label>
           </div>
 
-          <div className="title-description">
+          <div className="title-description formulaire">
             <label htmlFor="title">
               Titre
               <input
@@ -114,6 +141,7 @@ const Publish = ({ token }) => {
                 id="title"
                 onChange={(event) => handleChange(event, "title")}
                 value={articleInfo.title}
+                placeholder="ex: Chemise Sézane verte"
               />
             </label>
 
@@ -125,11 +153,12 @@ const Publish = ({ token }) => {
                 id="description"
                 onChange={(event) => handleChange(event, "description")}
                 value={articleInfo.description}
+                placeholder="ex: Portée quelquefois, taille correctement"
               ></textarea>
             </label>
           </div>
 
-          <div className="details">
+          <div className="details formulaire">
             <label htmlFor="brand">
               Marque
               <input
@@ -138,6 +167,7 @@ const Publish = ({ token }) => {
                 id="brand"
                 onChange={(event) => handleChange(event, "brand")}
                 value={articleInfo.brand}
+                placeholder="ex: Zara"
               />
             </label>
             <label htmlFor="size">
@@ -148,17 +178,19 @@ const Publish = ({ token }) => {
                 id="size"
                 onChange={(event) => handleChange(event, "size")}
                 value={articleInfo.size}
+                placeholder="ex: L / 40 / 12"
               />
             </label>
 
-            <label htmlFor="colour">
+            <label htmlFor="color">
               Couleur
               <input
                 type="text"
-                name="colour"
-                id="colour"
-                onChange={(event) => handleChange(event, "colour")}
-                value={articleInfo.colour}
+                name="color"
+                id="color"
+                onChange={(event) => handleChange(event, "color")}
+                value={articleInfo.color}
+                placeholder="ex: Fushia"
               />
             </label>
 
@@ -170,6 +202,7 @@ const Publish = ({ token }) => {
                 id="condition"
                 onChange={(event) => handleChange(event, "condition")}
                 value={articleInfo.condition}
+                placeholder="ex: Neuf avec étiquette"
               />
             </label>
 
@@ -181,11 +214,12 @@ const Publish = ({ token }) => {
                 id="city"
                 onChange={(event) => handleChange(event, "city")}
                 value={articleInfo.city}
+                placeholder="ex: Paris"
               />
             </label>
           </div>
 
-          <div className="price">
+          <div className="price formulaire">
             <label htmlFor="price">
               Prix
               <input
@@ -194,6 +228,7 @@ const Publish = ({ token }) => {
                 id="price"
                 onChange={(event) => handleChange(event, "price")}
                 value={articleInfo.price}
+                placeholder="1.00 €"
               />
             </label>
 
