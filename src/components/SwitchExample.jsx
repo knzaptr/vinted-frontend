@@ -22,13 +22,13 @@ class SwitchExample extends Component {
       justifyContent: "center",
       alignItems: "center",
       height: "100%",
-      fontSize: 14, // Ajuster la taille selon vos besoins
-      color: "white", // Couleur de l'icône
+      fontSize: 14,
+      color: "white",
     };
 
     return (
       <label>
-        <span>{this.props.name}</span>
+        <span style={{ marginRight: "10px" }}>{this.props.name}</span>
         <Switch
           height={20}
           width={40}

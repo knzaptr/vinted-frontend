@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Login = ({ setToken }) => {
@@ -10,6 +10,7 @@ const Login = ({ setToken }) => {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (event, key) => {
     const newObj = { ...userInfo };
@@ -27,7 +28,11 @@ const Login = ({ setToken }) => {
       Cookies.set("token", response.data.token, { expires: 14 });
       setToken(Cookies.get("token"));
 
-      navigate("/");
+      if (location.state) {
+        navigate(location.state.from);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error.response);
     }

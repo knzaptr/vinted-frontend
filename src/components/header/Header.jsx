@@ -1,8 +1,9 @@
 import VintedLogo from "../../assets/img/VintedLogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Header = ({ search, setSearch, token, setToken }) => {
+  const navigate = useNavigate();
   return (
     <header>
       <div className="container">
@@ -25,6 +26,7 @@ const Header = ({ search, setSearch, token, setToken }) => {
               onClick={() => {
                 Cookies.remove("token");
                 setToken(null);
+                navigate("/");
               }}
             >
               Se déconnecter

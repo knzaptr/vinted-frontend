@@ -21,20 +21,24 @@ const Home = ({ search }) => {
   let pageButton = [];
 
   const pageNo = () => {
-    for (let i = 1; i <= Math.ceil(nbTotalOffers / limit); i++) {
-      pageButton.push(
-        <button
-          key={i}
-          onClick={() => {
-            setPage(i);
-          }}
-        >
-          {i}
-        </button>
-      );
-    }
+    let nbpage = Math.ceil(nbTotalOffers / limit);
+    if (nbpage > 1) {
+      for (let i = 1; i <= nbpage; i++) {
+        pageButton.push(
+          <button
+            key={i}
+            className={page === i ? "selected" : ""}
+            onClick={() => {
+              setPage(i);
+            }}
+          >
+            {i}
+          </button>
+        );
+      }
 
-    return pageButton;
+      return pageButton;
+    }
   };
 
   useEffect(() => {
@@ -67,7 +71,7 @@ const Home = ({ search }) => {
   return isLoading ? (
     <span>En cours de chargement... </span>
   ) : (
-    <main>
+    <main className="home">
       <div className="hero">
         <div className="sell-container">
           <span>Prêts à faire du tri dans vos placards ?</span>
@@ -99,6 +103,7 @@ const Home = ({ search }) => {
           <div className="showNbOffer">
             <span>Afficher </span>
             <button
+              className={limit === nbTotalOffers ? "selected" : ""}
               onClick={() => {
                 setLimit(nbTotalOffers);
                 setPage(1);
@@ -107,6 +112,7 @@ const Home = ({ search }) => {
               all
             </button>
             <button
+              className={limit === 10 ? "selected" : ""}
               onClick={() => {
                 setLimit(10);
                 setPage(1);
@@ -115,6 +121,7 @@ const Home = ({ search }) => {
               10
             </button>
             <button
+              className={limit === 20 ? "selected" : ""}
               onClick={() => {
                 setLimit(20);
                 setPage(1);
@@ -123,6 +130,7 @@ const Home = ({ search }) => {
               20
             </button>
             <button
+              className={limit === 30 ? "selected" : ""}
               onClick={() => {
                 setLimit(30);
                 setPage(1);
@@ -150,6 +158,7 @@ const Home = ({ search }) => {
             );
           })}
         </div>
+
         <div className="page-number">{pageNo()}</div>
       </div>
     </main>
